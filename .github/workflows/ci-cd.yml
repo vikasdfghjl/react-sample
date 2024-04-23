@@ -36,14 +36,16 @@ jobs:
   deploy:
     needs: build-and-test
     runs-on: ubuntu-latest
-    env:
-      PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
-      HOSTNAME: ${{ secrets.EC2_HOST }}
-      USER_NAME: ${{ secrets.EC2_USERNAME }}
+    steps:
+      - name: ec2 hosting
+        env:
+          PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
+          HOSTNAME: ${{ secrets.EC2_HOST }}
+          USER_NAME: ${{ secrets.EC2_USERNAME }}
 
-    run: |
-      echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-      ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+        run: |
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
 
               # Now we have got the access of EC2 and we will start the deploy .
               cd /home/ubuntu/ &&
