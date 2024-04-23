@@ -46,6 +46,14 @@ jobs:
         run: |
           echo "$PRIVATE_KEY">private_key && chmod 600 private_key &&
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
-            cd /home/ubuntu &&
-            mkdir singh
+            cd /var/www/html &&
+            git clone https://github.com/vikasdfghjl/react-sample.git &&
+            cd react-sample &&
+            npm ci &&
+            npm run build &&
+            cp -R ./build/* ../ &&
+            rm -rf ./build &&
+            systemctl restart nginx
             '
+          
+          
