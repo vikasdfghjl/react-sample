@@ -5,7 +5,7 @@ on:
    branches:
      - main
 jobs:
-  deploy:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -18,6 +18,12 @@ jobs:
       - run: yarn install
       - run: yarn build
 
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: build/
+
       # - name: configure aws credentials
       #   uses: aws-actions/configure-aws-credentials@v1
       #   with:
@@ -27,3 +33,22 @@ jobs:
 
       # - name: deploy static site to s3 bucket
       #   run: aws s3 sync build/ s3://react-appp101
+
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build 
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            rm -rf /var/www/html/*  # Clean existing files before deployment
+            scp -r build/* ec2-user@${{ secrets.EC2_HOST }}:/var/www/html 
+            ssh ec2-user@${{ secrets.EC2_HOST }} 'sudo systemctl restart nginx'
