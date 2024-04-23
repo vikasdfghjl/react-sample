@@ -43,12 +43,12 @@ jobs:
         with:
           name: build 
       - name: Deploy to EC2
-        uses: appleboy/ssh-action@1.7.5
+        uses: omarhosny206/setup-ssh-for-ec2@v1.0.0
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
-          key: ${{ secrets.EC2_PRIVATE_KEY }}
-          script: |
-            rm -rf /var/www/html/*  # Clean existing files before deployment
-            scp -r build/* ubuntu@${{ secrets.EC2_HOST }}:/var/www/html 
-            ssh ec2-user@${{ secrets.EC2_HOST }} 'sudo systemctl restart nginx'
+          EC2_SSH_PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
+          EC2_URL: ${{ secrets.EC2_HOST }}
+      - name: run ssh commands
+        run: |
+          rm -rf /var/www/html/*  # Clean existing files before deployment
+          scp -r build/* ubuntu@${{ secrets.EC2_HOST }}:/var/www/html 
+          ssh ec2-user@${{ secrets.EC2_HOST }} 'sudo systemctl restart nginx'
