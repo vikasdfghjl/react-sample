@@ -50,6 +50,5 @@ jobs:
             '
       - name: copy build to /var/www/html
         run: |
-          echo "$PRIVATE_KEY">private_key && chmod 600 private_key &&
           scp -o StrictHostKeyChecking=no -i private_key -r build/* ${USER_NAME}@${HOSTNAME}:/var/www/html 
 
