@@ -50,5 +50,6 @@ jobs:
             '
       - name: copy build to /var/www/html
         run: |
+          ls
           scp -o StrictHostKeyChecking=no -i private_key -r build/* ubuntu@ec2-52-66-210-122.ap-south-1.compute.amazonaws.com:/var/www/html 
 
