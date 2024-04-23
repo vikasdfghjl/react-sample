@@ -1,9 +1,9 @@
 name: automate-react-ec2
 
 on:
- push:
-   branches:
-     - main
+  push:
+    branches:
+      - main
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -13,7 +13,6 @@ jobs:
 
       - name: setupnode
         uses: actions/setup-node@v2
-
 
       - run: yarn install
       - run: yarn build
@@ -37,19 +36,17 @@ jobs:
   deploy:
     needs: build-and-test
     runs-on: ubuntu-latest
-    steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: build 
-      - name: Deploy to EC2
-        uses: omarhosny206/setup-ssh-for-ec2@v1.0.0
-        with:
-          EC2_SSH_PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
-          EC2_URL: ${{ secrets.EC2_HOST }}
-      - name: run ssh commands
-        run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }}
-          rm -rf /var/www/html/*  # Clean existing files before deployment
-          scp -r build/* ubuntu@${{ secrets.EC2_HOST }}:/var/www/html 
-          ssh ec2-user@${{ secrets.EC2_HOST }} 'sudo systemctl restart nginx'
+    env:
+      PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
+      HOSTNAME: ${{ secrets.EC2_HOST }}
+      USER_NAME: ${{ secrets.EC2_USERNAME }}
+
+    run: |
+      echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+      ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+
+              # Now we have got the access of EC2 and we will start the deploy .
+              cd /home/ubuntu/ &&
+              mkdir vikas              
+              '
+      
