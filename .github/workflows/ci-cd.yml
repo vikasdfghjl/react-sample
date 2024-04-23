@@ -45,9 +45,9 @@ jobs:
 
         run: |
           ls
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key \
-          echo "PRIVATE_KEY: $PRIVATE_KEY" \
-          echo "USER_NAME: $USER_NAME" \
-          echo "HOSTNAME: $HOSTNAME" \
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key &&
+          echo "PRIVATE_KEY: $PRIVATE_KEY"  &&
+          echo "USER_NAME: $USER_NAME" &&
+          echo "HOSTNAME: $HOSTNAME" &&
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME}
       
