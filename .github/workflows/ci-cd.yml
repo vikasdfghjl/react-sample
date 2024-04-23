@@ -1,4 +1,4 @@
-name: automate-react-s3
+name: automate-react-ec2
 
 on:
  push:
@@ -43,7 +43,7 @@ jobs:
         with:
           name: build 
       - name: Deploy to EC2
-        uses: appleboy/ssh-action@1.0.3
+        uses: appleboy/ssh-action@1.7.5
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
