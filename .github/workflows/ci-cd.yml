@@ -49,6 +49,7 @@ jobs:
           EC2_URL: ${{ secrets.EC2_HOST }}
       - name: run ssh commands
         run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }}
           rm -rf /var/www/html/*  # Clean existing files before deployment
           scp -r build/* ubuntu@${{ secrets.EC2_HOST }}:/var/www/html 
           ssh ec2-user@${{ secrets.EC2_HOST }} 'sudo systemctl restart nginx'
