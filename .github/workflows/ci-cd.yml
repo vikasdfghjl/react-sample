@@ -33,10 +33,7 @@ jobs:
       # - name: deploy static site to s3 bucket
       #   run: aws s3 sync build/ s3://react-appp101
 
-  deploy:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    steps:
+  
       - name: ec2 hosting
         env:
           PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
