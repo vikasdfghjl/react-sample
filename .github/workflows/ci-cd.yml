@@ -48,6 +48,6 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
             rm -rf /var/www/html/*
             scp -r build/* ${USER_NAME}@${HOSTNAME}:/var/www/html 
-            ssh ${USER_NAME}@${HOSTNAME} 'sudo systemctl restart nginx'
+            sudo systemctl restart nginx
           '
       
