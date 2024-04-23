@@ -48,7 +48,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
             cd /var/www/html &&
             sudo git clone https://github.com/vikasdfghjl/react-sample.git &&
-            sudo cd react-sample &&
+            cd react-sample &&
             sudo npm ci &&
             sudo npm run build &&
             sudo cp -R ./build/* ../ &&
