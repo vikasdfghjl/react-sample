@@ -44,6 +44,8 @@ jobs:
           USER_NAME: ${{ secrets.EC2_USERNAME }}
 
         run: |
+          ls
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ls
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME}
       
