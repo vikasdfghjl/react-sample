@@ -46,9 +46,9 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
-          username: ec2-user
+          username: ubuntu
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
             rm -rf /var/www/html/*  # Clean existing files before deployment
-            scp -r build/* ec2-user@${{ secrets.EC2_HOST }}:/var/www/html 
+            scp -r build/* ubuntu@${{ secrets.EC2_HOST }}:/var/www/html 
             ssh ec2-user@${{ secrets.EC2_HOST }} 'sudo systemctl restart nginx'
