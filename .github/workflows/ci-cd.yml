@@ -44,7 +44,7 @@ jobs:
           USER_NAME: ${{ secrets.EC2_USERNAME }}
 
         run: |
-          ls
+          ll
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key &&
           echo "PRIVATE_KEY: $PRIVATE_KEY"  &&
           echo "USER_NAME: $USER_NAME" &&
