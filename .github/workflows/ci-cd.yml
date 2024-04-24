@@ -52,5 +52,5 @@ jobs:
             sudo rm -rf /var/www/html/*
             ' && pwd && 
             ls && 
-            scp -o StrictHostKeyChecking=no -i private_key -r . ${USER_NAME}@${HOSTNAME}:/var/www/html
+            scp -o StrictHostKeyChecking=no -i private_key -r ./* ${USER_NAME}@${HOSTNAME}:/var/www/html
             
