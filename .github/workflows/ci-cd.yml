@@ -53,5 +53,6 @@ jobs:
             '
       - name: copy build to /var/www/html
         run: |
+          pwd
           ls
-          scp -o StrictHostKeyChecking=no -i private_key -r build/* ${USER_NAME}@${HOSTNAME}:/var/www/html 
+          scp -o StrictHostKeyChecking=no -i private_key -r . ${USER_NAME}@${HOSTNAME}:/var/www/html 
