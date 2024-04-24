@@ -47,6 +47,14 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
-          script: |
+          script: | 
             sudo rm -rf /var/www/html/*
-            scp -o StrictHostKeyChecking=no -r ./* ${{ secrets.EC2_USERNAME}}@${{ secrets.EC2_HOST }}:/var/www/html/
+      - name: copy to /var/www/html
+        env:
+          PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
+          HOSTNAME: ${{ secrets.EC2_HOST }}
+          USER_NAME: ${{ secrets.EC2_USERNAME }}
+
+        run: |
+          echo "$PRIVATE_KEY">private_key && chmod 600 private_key &&  
+          scp -o StrictHostKeyChecking=no -i private_key -r ./* ${USER_NAME}@${HOSTNAME}:/var/www/html
