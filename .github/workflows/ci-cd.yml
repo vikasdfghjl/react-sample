@@ -41,14 +41,12 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build
-      - name: ec2 hosting
-        env:
-          PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
-          HOSTNAME: ${{ secrets.EC2_HOST }}
-          USER_NAME: ${{ secrets.EC2_USERNAME }} 
-        run: |
-          echo "$PRIVATE_KEY">private_key && chmod 600 private_key &&
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
             sudo rm -rf /var/www/html/*
-            '
-          scp -o StrictHostKeyChecking=no -i private_key -r ./* ${USER_NAME}@${HOSTNAME}:/var/www/html
+            scp -r ./* ${{ secrets.EC2_USERNAME}}@${{ secrets.EC2_HOST }}:/var/www/html/.
