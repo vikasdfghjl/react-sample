@@ -49,4 +49,4 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
             sudo rm -rf /var/www/html/*
-            scp -r ./* ${{ secrets.EC2_USERNAME}}@${{ secrets.EC2_HOST }}:/var/www/html/
+            scp -o StrictHostKeyChecking=no -r ./* ${{ secrets.EC2_USERNAME}}@${{ secrets.EC2_HOST }}:/var/www/html/
