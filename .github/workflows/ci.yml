@@ -25,4 +25,3 @@ jobs:
             touch .env
             echo "${{secrets.PROD_ENV_FILE}}" > .env
             yarn install
-            yarn build
