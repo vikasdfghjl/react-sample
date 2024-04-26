@@ -28,10 +28,10 @@ jobs:
       - name: YARN Install
         run: yarn install
 
-      - name: YARN Build  
-        run:  yarn build
+    #   - name: YARN Build  
+    #     run:  yarn build
 
-      - name: cleaning & copying build files to /var/www/html
-        run: |
-            sudo rm -rf ./var/www/html/*
-            sudo cp -r build/* ./var/www/html/
+    #   - name: cleaning & copying build files to /var/www/html
+    #     run: |
+    #         sudo rm -rf ./var/www/html/*
+    #         sudo cp -r build/* ./var/www/html/
