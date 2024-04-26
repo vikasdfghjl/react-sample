@@ -25,8 +25,8 @@ jobs:
             touch .env
             echo "${{secrets.PROD_ENV_FILE}}" > .env
             
-      - name: YARN Install
-        run: yarn install
+      - name: npm Install
+        run: npm ci
 
     #   - name: YARN Build  
     #     run:  yarn build
