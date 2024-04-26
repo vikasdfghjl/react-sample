@@ -1,9 +1,11 @@
 version: '3'
 services:
+  react-app: 
+    build: ./
   nginx:
-    image: dockerhub.ir/nginx
+    image: dockerhub.ir/nginx 
     ports:
-      - 3000:80
+      - "3000:80"
     volumes:
-      - ./out:/usr/share/nginx/html
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./app/build:/usr/share/nginx/html # Mount the React build output
+      - ./app/nginx.conf:/etc/nginx/conf.d/default.conf:ro 

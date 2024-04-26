@@ -1,0 +1,28 @@
+name: ec2-hosting
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: self-hosted
+    strategy:
+        matrix:
+            node-version: [18.x]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: setupnode
+        uses: actions/setup-node@v3
+        with:
+            node-version: ${{matrix.node-version}}
+            cache: 'npm'
+
+      - name: Exporting .env
+        run: |
+            touch .env
+            echo "${{secrets.PROD_ENV_FILE}}" > .env
+            yarn install
+            yarn build
